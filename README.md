@@ -1,0 +1,12 @@
+## What I should learn from this project
+
+- How to incorporate Firebase into your Flutter projects.
+- How to use Firebase authentication to register and sign in users.
+- How to create beautiful animations using the Flutter Hero widget.
+- How to create custom aniamtions using Flutter's animation controller. 
+- Learn all about mixins and how they differ from superclasses.
+- Learn about Streams and how they work.
+- Learn to use ListViews to build scrolling views.
+- How to use Firebase Cloud Firestore to store and retrieve data on the fly.
+
+Project from AppBrewery's course on flutter. I could do the project from scratch without any guide, but since some of the concepts here are new to me Imma take the course.
