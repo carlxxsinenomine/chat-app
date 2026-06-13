@@ -25,6 +25,7 @@ class MainButton extends StatelessWidget {
           height: 42.0,
           child: Text(
             buttonLabel,
+            style: TextStyle(color: Colors.white),
           ),
         ),
       ),

@@ -1,8 +1,8 @@
 import 'package:flash_chat/components/logo_animation.dart';
-import 'package:flash_chat/components/main_text_field.dart';
 import 'package:flutter/material.dart';
 
 import '../components/main_button.dart';
+import '../constants.dart';
 
 class LoginScreen extends StatefulWidget {
   static String id = "login_screen";
@@ -12,6 +12,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  late String email;
+  late String password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,15 +29,25 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(
               height: 48.0,
             ),
-            MainTextField(hintLabel: "Enter your email", onChange: (value) {
-
-            }),
+            TextField(
+              keyboardType: TextInputType.emailAddress,
+              onChanged: (value) {
+                email = value;
+              },
+              decoration:
+              kTextFieldDeco.copyWith(hintText: "Enter your email"),
+            ),
             SizedBox(
               height: 8.0,
             ),
-            MainTextField(hintLabel: "Enter your password", onChange: (value) {
-
-            }),
+            TextField(
+              obscureText: true,
+              onChanged: (value) {
+                password = value;
+              },
+              decoration:
+              kTextFieldDeco.copyWith(hintText: "Enter your password"),
+            ),
             SizedBox(
               height: 24.0,
             ),
