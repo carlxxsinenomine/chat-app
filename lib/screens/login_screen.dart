@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/components/logo_animation.dart';
 import 'package:flutter/material.dart';
 
 import '../components/main_button.dart';
 import '../constants.dart';
+import 'chat_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static String id = "login_screen";
@@ -12,6 +14,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _auth = FirebaseAuth.instance;
   late String email;
   late String password;
 
@@ -54,8 +57,15 @@ class _LoginScreenState extends State<LoginScreen> {
             MainButton(
                 buttonColor: Colors.lightBlueAccent,
                 buttonLabel: 'Log In',
-                onTap: () {
-
+                onTap: () async {
+                  try {
+                    final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
+                    if(user != "") {
+                      Navigator.pushNamed(context, ChatScreen.id);
+                    }
+                  } on Exception catch (e) {
+                    print(e);
+                  }
                 }),
           ],
         ),
