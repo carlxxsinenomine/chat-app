@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+final String logoAnimationTag = 'logo';
 
 const kSendButtonTextStyle = TextStyle(
   color: Colors.lightBlueAccent,

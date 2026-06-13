@@ -1,5 +1,6 @@
-import 'package:flash_chat/contants.dart';
 import 'package:flutter/material.dart';
+
+import '../constants.dart';
 
 class LogoAnimation extends StatelessWidget {
   const LogoAnimation({super.key});
