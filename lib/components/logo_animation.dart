@@ -7,11 +7,13 @@ class LogoAnimation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Hero(
-      tag: logoAnimationTag,
-      child: Container(
-        height: 200.0,
-        child: Image.asset('images/logo.png'),
+    return Flexible(
+      child: Hero(
+        tag: logoAnimationTag,
+        child: Container(
+          height: 200.0,
+          child: Image.asset('images/logo.png'),
+        ),
       ),
     );
   }
