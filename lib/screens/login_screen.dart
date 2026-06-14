@@ -18,6 +18,8 @@ class _LoginScreenState extends State<LoginScreen> {
   late String email;
   late String password;
 
+  bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,8 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
               onChanged: (value) {
                 email = value;
               },
-              decoration:
-              kTextFieldDeco.copyWith(hintText: "Enter your email"),
+              decoration: kTextFieldDeco.copyWith(hintText: "Enter your email"),
             ),
             SizedBox(
               height: 8.0,
@@ -49,24 +50,47 @@ class _LoginScreenState extends State<LoginScreen> {
                 password = value;
               },
               decoration:
-              kTextFieldDeco.copyWith(hintText: "Enter your password"),
+                  kTextFieldDeco.copyWith(hintText: "Enter your password"),
             ),
             SizedBox(
               height: 24.0,
             ),
-            MainButton(
-                buttonColor: Colors.lightBlueAccent,
-                buttonLabel: 'Log In',
-                onTap: () async {
-                  try {
-                    final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
-                    if(user != "") {
-                      Navigator.pushNamed(context, ChatScreen.id);
-                    }
-                  } on Exception catch (e) {
-                    print(e);
-                  }
-                }),
+            _isLoading
+                ? Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Material(
+                        elevation: 5.0,
+                        color: Colors.lightBlueAccent,
+                        borderRadius: BorderRadius.circular(30.0),
+                        child: SizedBox(
+                            height: 48,
+                            child: Center(child: CircularProgressIndicator()))),
+                  )
+                : MainButton(
+                    buttonColor: Colors.lightBlueAccent,
+                    buttonLabel: 'Log In',
+                    onTap: _isLoading
+                        ? null
+                        : () async {
+                            if (_isLoading) return;
+                            setState(() {
+                              _isLoading = true;
+                            });
+                            try {
+                              final user =
+                                  await _auth.signInWithEmailAndPassword(
+                                      email: email, password: password);
+                              if (user != "") {
+                                Navigator.popAndPushNamed(context, ChatScreen.id);
+                              }
+                            } on Exception catch (e) {
+                              print(e);
+                            } finally {
+                              setState(() {
+                                _isLoading = false;
+                              });
+                            }
+                          }),
           ],
         ),
       ),

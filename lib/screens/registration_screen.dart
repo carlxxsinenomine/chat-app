@@ -20,6 +20,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   late String email;
   late String password;
 
+  bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,23 +57,42 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             SizedBox(
               height: 24.0,
             ),
-            MainButton(
-                buttonColor: Colors.blueAccent,
-                buttonLabel: 'Register',
-                onTap: () async {
-                  // print(email);
-                  // print(password);
-                  try {
-                    final new_user = await _auth.createUserWithEmailAndPassword(
-                        email: email, password: password);
-                    if(new_user != "") {
-                      Navigator.pushNamed(context, ChatScreen.id);
-                    }
-                  } catch (e) {
-                    print(e);
-                  }
-
-                }),
+            _isLoading
+                ? Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Material(
+                        elevation: 5.0,
+                        color: Colors.blueAccent,
+                        borderRadius: BorderRadius.circular(30.0),
+                        child: SizedBox(
+                            height: 48,
+                            child: Center(child: CircularProgressIndicator()))),
+                  )
+                : MainButton(
+                    buttonColor: Colors.blueAccent,
+                    buttonLabel: 'Register',
+                    onTap: _isLoading
+                        ? null
+                        : () async {
+                            // print(email);
+                            // print(password);
+                            if (_isLoading) return;
+                            setState(() {
+                              _isLoading = true;
+                            });
+                            try {
+                              final new_user =
+                                  await _auth.createUserWithEmailAndPassword(
+                                      email: email, password: password);
+                            } catch (e) {
+                              print(e);
+                            } finally {
+                              setState(() {
+                                _isLoading = false;
+                              });
+                              Navigator.pop(context);
+                            }
+                          }),
           ],
         ),
       ),
